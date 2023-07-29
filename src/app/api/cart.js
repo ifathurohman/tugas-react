@@ -1,13 +1,14 @@
 import axios from 'axios';
-import {config} from '../../config';
+import {config} from '../../utils/config';
+import {getToken} from '../../utils/localstorage';
 
-export const saveCart = async (token, cart) => {
+export const saveCart = async (cart) => {
   return await axios.put(
     `${config.api_host}/api/carts`,
-    {items: cart},
+    {cart},
     {
       headers: {
-        authorization: `Bearer ${token}`,
+        Authorization: 'Bearer ' + getToken(),
       },
     },
   );

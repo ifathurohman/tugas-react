@@ -1,38 +1,29 @@
 import React, {useState} from 'react';
 import {NavLink, useNavigate} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
+import {setToken} from '../utils/localstorage';
 import {loginUser} from '../app/api/auth';
-import {userLogin} from '../app/features/auth/actions';
 
 const SignIn = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [ok, setOK] = useState('');
-  let {auth} = useSelector(state => state.auth);
-  console.log(auth);
-  const dispatch = useDispatch();
-  const onLogin = e => {
+  const [email, setEmail] = useState('lorem@gmail.com');
+  const [password, setPassword] = useState('12345');
+  const [loading, setLoading] = useState(false);
+
+  const _handleSubmit = e => {
     e.preventDefault();
+    setLoading(false);
     loginUser({email, password})
       .then(response => {
-        const successMessage = response.data.message;
-        if (successMessage === 'Login Successfully') {
-          setOK(successMessage);
-          console.log(response.data);
-          dispatch(userLogin(response.data));
-          setTimeout(() => {
-            navigate('/');
-          }, 2000);
-        }
+        setToken(response.data.token);
+        navigate(-1);
+        // location.reload();
       })
       .catch(e => {
-        const errorMessage = e.response.data.message;
-        setError(errorMessage);
+        return e;
       });
   };
 
+  if (loading) return <h1>Loading.....</h1>;
   return (
     <div>
       <section className="bg-custom-white dark:bg-custom-dark">
@@ -43,26 +34,6 @@ const SignIn = () => {
                 Login your account
               </h1>
               <form className="space-y-4 md:space-y-6" action="#">
-                {error ? (
-                  <div
-                    className="bg-red-100 border-t border-b border-red-500 text-red-700 px-4 py-3"
-                    role="alert">
-                    <p className="font-bold">Error</p>
-                    <p className="text-sm">{error}</p>
-                  </div>
-                ) : (
-                  <div></div>
-                )}
-                {ok ? (
-                  <div
-                    className="bg-green-100 border-t border-b border-green-500 text-green-700 px-4 py-3"
-                    role="alert">
-                    <p className="font-bold">OK</p>
-                    <p className="text-sm">{ok}</p>
-                  </div>
-                ) : (
-                  <div></div>
-                )}
                 <div>
                   <label
                     htmlFor="email"
@@ -99,7 +70,7 @@ const SignIn = () => {
                 <button
                   type="submit"
                   className="w-full text-black bg-custom-green hover:bg-custom-dark-green focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                  onClick={onLogin}>
+                  onClick={_handleSubmit}>
                   Sign In
                 </button>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">

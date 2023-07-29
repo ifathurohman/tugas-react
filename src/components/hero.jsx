@@ -1,104 +1,70 @@
 import React from 'react';
+import {Slide} from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css';
+import {IoIosArrowForward, IoIosArrowBack} from 'react-icons/io';
 
-const Hero = () => {
+const buttonStyle = {
+  width: '30px',
+  background: 'none',
+  border: '0px',
+  color: 'white',
+};
+const properties = {
+  prevArrow: (
+    <button style={{...buttonStyle}}>
+      <IoIosArrowBack size={24} />
+    </button>
+  ),
+  nextArrow: (
+    <button style={{...buttonStyle}}>
+      <IoIosArrowForward size={24} />
+    </button>
+  ),
+};
+
+const divStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundSize: 'cover',
+  height: '700px',
+  borderRadius: '10px',
+};
+const slideImages = [
+  {
+    url: 'https://img.freepik.com/free-psd/sale-banner-template_24972-824.jpg?w=1380&t=st=1689240778~exp=1689241378~hmac=f7c9bd17ae57ff31ccdd94d2af30b21cf1e6016ae2ba8bccae18cc8d041c6a63',
+  },
+  {
+    url: 'https://img.freepik.com/free-vector/new-season-banner-template-with-splash_1361-1527.jpg?w=1060&t=st=1689240779~exp=1689241379~hmac=984361811c8c34a9ffa1b6d7248bfc03fcdbe750c61a28e73b8c641200643773',
+  },
+  {
+    url: 'https://img.freepik.com/free-vector/flat-geometric-fashion-youtube-thumbnail_23-2148918593.jpg?w=1380&t=st=1689240781~exp=1689241381~hmac=32291dbfe0a255c7e9a919d474c55688887073c645147a24ec031982e8605376',
+  },
+  {
+    url: 'https://img.freepik.com/premium-vector/fashion-banner-sale-with-text-effect_92715-89.jpg?w=1060',
+  },
+];
+
+function Hero() {
   return (
-    <section className="text-gray-600 body-font">
-      <div className="container px-5 py-24 mx-auto flex flex-wrap">
-        <div className="lg:w-2/3 mx-auto">
-          <div className="flex flex-wrap w-full bg-gray-100 py-32 px-10 relative mb-4">
-            <img
-              alt="gallery"
-              className="w-full object-cover h-full object-center block opacity-25 absolute inset-0"
-              src="https://dummyimage.com/820x340"
-            />
-            <div className="text-center relative z-10 w-full">
-              <h2 className="text-2xl text-gray-900 font-medium title-font mb-2">
-                Shooting Stars
-              </h2>
-              <p className="leading-relaxed">
-                Skateboard +1 mustache fixie paleo lumbersexual.
-              </p>
-              <a className="mt-3 text-yellow-500 inline-flex items-center">
-                Learn More
-                <svg
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  className="w-4 h-4 ml-2"
-                  viewBox="0 0 24 24">
-                  <path d="M5 12h14M12 5l7 7-7 7"></path>
-                </svg>
-              </a>
-            </div>
-          </div>
-          <div className="flex flex-wrap -mx-2">
-            <div className="px-2 w-1/2">
-              <div className="flex flex-wrap w-full bg-gray-100 sm:py-24 py-16 sm:px-10 px-6 relative">
-                <img
-                  alt="gallery"
-                  className="w-full object-cover h-full object-center block opacity-25 absolute inset-0"
-                  src="https://dummyimage.com/542x460"
-                />
-                <div className="text-center relative z-10 w-full">
-                  <h2 className="text-xl text-gray-900 font-medium title-font mb-2">
-                    Shooting Stars
-                  </h2>
-                  <p className="leading-relaxed">
-                    Skateboard +1 mustache fixie paleo lumbersexual.
-                  </p>
-                  <a className="mt-3 text-yellow-500 inline-flex items-center">
-                    Learn More
-                    <svg
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      className="w-4 h-4 ml-2"
-                      viewBox="0 0 24 24">
-                      <path d="M5 12h14M12 5l7 7-7 7"></path>
-                    </svg>
-                  </a>
-                </div>
+    <div className="py-[5rem]">
+      <div className="flex justify-center">
+        <div className="w-[97%] pt-12">
+          <Slide {...properties} transitionDuration={500}>
+            {slideImages.map((slideImage, index) => (
+              <div key={index}>
+                <div
+                  style={{
+                    ...divStyle,
+                    backgroundImage: `url(${slideImage.url})`,
+                  }}></div>
               </div>
-            </div>
-            <div className="px-2 w-1/2">
-              <div className="flex flex-wrap w-full bg-gray-100 sm:py-24 py-16 sm:px-10 px-6 relative">
-                <img
-                  alt="gallery"
-                  className="w-full object-cover h-full object-center block opacity-25 absolute inset-0"
-                  src="https://dummyimage.com/542x420"
-                />
-                <div className="text-center relative z-10 w-full">
-                  <h2 className="text-xl text-gray-900 font-medium title-font mb-2">
-                    Shooting Stars
-                  </h2>
-                  <p className="leading-relaxed">
-                    Skateboard +1 mustache fixie paleo lumbersexual.
-                  </p>
-                  <a className="mt-3 text-yellow-500 inline-flex items-center">
-                    Learn More
-                    <svg
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      className="w-4 h-4 ml-2"
-                      viewBox="0 0 24 24">
-                      <path d="M5 12h14M12 5l7 7-7 7"></path>
-                    </svg>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+            ))}
+          </Slide>
         </div>
       </div>
-    </section>
+    </div>
   );
-};
+}
 
 export default Hero;

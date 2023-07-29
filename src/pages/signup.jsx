@@ -1,30 +1,26 @@
 import React, {useState} from 'react';
 import {NavLink, useNavigate} from 'react-router-dom';
+import {registerUser} from '../app/api/auth';
 
 const SignUp = () => {
   const navigate = useNavigate();
 
-  const [fullname, setFullname] = useState('');
+  const [full_name, setFullname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-//   const onSubmit = async e => {
-//     e.preventDefault();
-
-//     await createUserWithEmailAndPassword(auth, email, password)
-//       .then(userCredential => {
-//         // Signed in
-//         const user = userCredential.user;
-//         navigate('/');
-//         // ...
-//       })
-//       .catch(error => {
-//         const errorCode = error.code;
-//         const errorMessage = error.message;
-//         console.log(errorCode, errorMessage);
-//         // ..
-//       });
-//   };
+  const onSubmit = async e => {
+    e.preventDefault();
+    registerUser({full_name, email, password})
+      .then(response => {
+        console.log(response);
+        navigate(-1);
+      })
+      .catch(e => {
+        console.log(e.response.data)
+        return e;
+      });
+  };
 
   return (
     <div>
@@ -38,18 +34,18 @@ const SignUp = () => {
               <form className="space-y-4 md:space-y-6" action="#">
                 <div>
                   <label
-                    htmlFor="fullname"
+                    htmlFor="full_name"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-                    Your fullname
+                    Your full_name
                   </label>
                   <input
-                    type="fullname"
-                    name="fullname"
-                    id="fullname"
+                    type="full_name"
+                    name="full_name"
+                    id="full_name"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="lorem ipsum"
                     required=""
-                    value={fullname}
+                    value={full_name}
                     onChange={e => setFullname(e.target.value)}
                   />
                 </div>
@@ -114,8 +110,7 @@ const SignUp = () => {
                 <button
                   type="submit"
                   className="w-full text-black bg-custom-green hover:bg-custom-dark-green focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-                  //   onClick={onSubmit}
-                >
+                  onClick={onSubmit}>
                   Create an account
                 </button>
                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
