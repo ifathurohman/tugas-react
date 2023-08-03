@@ -59,7 +59,7 @@ const Navbar = () => {
           <Link to={'/product'} className="mr-5 hover:text-gray-900">
             Product
           </Link>
-          <a className="mr-5 hover:text-gray-900">Second Link</a>
+          <Link to={'/order'} className="mr-5 hover:text-gray-900">History</Link>
         </nav>
         {/* Search */}
         <div className="md:flex mr-4 ml-12">

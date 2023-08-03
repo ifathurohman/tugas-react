@@ -101,6 +101,7 @@ const DeliveryAddress = () => {
     getAddress(10)
       .then(response => {
         setDataAddress(response.data);
+        console.log(response.data);
       })
       .catch(e => {
         return e;
@@ -147,6 +148,7 @@ const DeliveryAddress = () => {
       id_kabupatenTag: event.currentTarget.dataset.id_kabupatenTag,
       kabupatenTag: event.currentTarget.dataset.kabupatenTag,
       detailTag: event.currentTarget.dataset.detailTag,
+      id: event.currentTarget.dataset.id,
       user: user.userInfo.details._id,
     };
 
@@ -432,6 +434,7 @@ const DeliveryAddress = () => {
                 key={index}
                 onClick={handleSelectAddress}
                 data-key={index}
+                data-id={address._id}
                 data-name-tag={address.name}
                 data-detail-tag={address.detail}
                 data-provinsi-tag={address.provinsi}

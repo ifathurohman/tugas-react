@@ -10,6 +10,8 @@ import DeliveryAddress from '../components/delivery';
 import axios, {Axios} from 'axios';
 
 import {Select, initTE} from 'tw-elements';
+import {createOrder} from '../app/api/order';
+import {getAddress} from '../app/api/address';
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -39,7 +41,7 @@ const Cart = () => {
   const totalPayment = parseInt(total) + parseInt(deliveryCost);
 
   const active =
-    'bg-yellow-200 border-b transition duration-300 ease-in-out hover:bg-yellow-200 dark:border-neutral-500 dark:hover:bg-neutral-600 cursor-pointer border-solid border-2 border-gray  bg-green-400 font-semibold';
+    'bg-yellow-200 border-b transition duration-300 ease-in-out hover:bg-yellow-200 dark:border-neutral-500 dark:hover:bg-neutral-600 cursor-pointer border-solid border-2 border-gray font-semibold';
   const inactive =
     'border-b transition duration-300 ease-in-out hover:bg-yellow-200 dark:border-neutral-500 dark:hover:bg-neutral-600 cursor-pointer';
 
@@ -49,6 +51,7 @@ const Cart = () => {
       return acc + item?.price * item?.qty;
     }, 0);
     setTotal(total);
+    fetchDataAddress();
   }, [carts]);
 
   const handleInc = id => {
@@ -123,6 +126,47 @@ const Cart = () => {
     setCellValue(e.currentTarget.dataset);
     setdeliveryCost(e.currentTarget.dataset.costTag);
     setActiveBox(e.currentTarget.getAttribute('data-key'));
+  };
+
+  const fetchDataAddress = async e => {
+    getAddress(10)
+      .then(response => {
+        console(response.data);
+      })
+      .catch(e => {
+        return e;
+      });
+  };
+
+  const handleCreateOrder = async () => {
+    const dataService = {
+      costTag: cellValue.costTag,
+      descriptionTag: cellValue.descriptionTag,
+      etdTag: cellValue.etdTag,
+      key: cellValue.key,
+      serviceTag: cellValue.serviceTag,
+    };
+
+    console.log(dataService);
+
+    let payload = {
+      delivery_address: address[0].id,
+      delivery_fee: deliveryCost,
+      shipping_service: dataService,
+    };
+
+    createOrder(payload)
+      .then(response => {
+        console.log(response);
+        localStorage.setItem(
+          'cart',
+          JSON.stringify([]),
+        );
+        navigate(`/order/${response.data._id}`);
+      })
+      .catch(e => {
+        return e;
+      });
   };
 
   if (carts.length === 0) {
@@ -354,7 +398,9 @@ const Cart = () => {
                 />
               </span>
             </div>
-            <button className="mt-5 bg-yellow-500 font-semibold rounded-md hover:bg-yellow-600 py-3 text-sm text-white uppercase w-full">
+            <button
+              onClick={handleCreateOrder}
+              className="mt-5 bg-yellow-500 font-semibold rounded-md hover:bg-yellow-600 py-3 text-sm text-white uppercase w-full">
               Checkout
             </button>
           </div>

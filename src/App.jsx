@@ -13,6 +13,8 @@ import ToogleCart from './components/tooglecart';
 import {useDispatch, useSelector} from 'react-redux';
 import {setUserDeatils} from './redux/actions/userAction';
 import DeliveryAddress from './components/delivery';
+import OrderDetail from './components/order';
+import OrderHistory from './components/orderHistory';
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +35,8 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/delivery" element={<DeliveryAddress />} />
+        <Route path="/order" element={<OrderHistory />} />
+        <Route path="/order/:id" element={<OrderDetail />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {drawer && <ToogleCart />}
