@@ -10,6 +10,8 @@ import {saveCart} from '../app/api/cart';
 import {getToken} from '../utils/localstorage.js';
 
 import 'react-toastify/dist/ReactToastify.css';
+import Review from './review';
+import Footer from './footer';
 
 const productDetail = () => {
   const navigate = useNavigate();
@@ -87,7 +89,7 @@ const productDetail = () => {
     <div>
       <ToastContainer />
       <section className="text-gray-600 body-font overflow-hidden">
-        <div className="container px-5 py-24 mx-auto">
+        <div className="container px-5 py-5 mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <img
               alt="ecommerce"
@@ -252,7 +254,9 @@ const productDetail = () => {
             </div>
           </div>
         </div>
+        <Review />
       </section>
+      <Footer/>
     </div>
   );
 };

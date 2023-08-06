@@ -15,6 +15,8 @@ import {setUserDeatils} from './redux/actions/userAction';
 import DeliveryAddress from './components/delivery';
 import OrderDetail from './components/order';
 import OrderHistory from './components/orderHistory';
+import Banner from './components/banner';
+import Invoice from './components/invoice';
 
 function App() {
   const dispatch = useDispatch();
@@ -26,7 +28,8 @@ function App() {
 
   return (
     <Router>
-      <Navbar />
+      <Navbar/>
+      <Banner/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product/:q" element={<ProductDetail />} />
@@ -37,6 +40,7 @@ function App() {
         <Route path="/delivery" element={<DeliveryAddress />} />
         <Route path="/order" element={<OrderHistory />} />
         <Route path="/order/:id" element={<OrderDetail />} />
+        <Route path="/invoice/:id" element={<Invoice />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {drawer && <ToogleCart />}

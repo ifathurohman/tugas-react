@@ -21,7 +21,7 @@ const Home = () => {
       <div className="px-[5rem]">
         <Hero />
         <Category />
-        <div className="flex flex-col text-center w-full mb-20 pt-[6rem]">
+        <div className="flex flex-col text-center w-full mb-20">
           <h2 className="text-xs text-indigo-500 tracking-widest font-medium title-font mb-1">
             PRODUCTS
           </h2>

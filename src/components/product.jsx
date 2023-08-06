@@ -9,7 +9,7 @@ const Product = () => {
   const dispatch = useDispatch();
   const getProducts = useSelector(state => state.getProducts);
   const {products, loading, error} = getProducts;
-  
+
   useEffect(() => {
     dispatch(listProducts());
   }, [dispatch]);
@@ -38,7 +38,7 @@ const Product = () => {
                   <span className="inline-block py-1 px-2 rounded bg-indigo-200 text-indigo-500 text-xs font-medium tracking-widest">
                     {product.category.name}
                   </span>
-                  <h2 className="sm:text-2xl text-xl title-font font-thin text-gray-900 mt-4 mb-4">
+                  <h2 className="sm:text-2xl text-xl title-font font-thin text-gray-900 mt-4 mb-4 truncate lg:text-ellipsis">
                     {product.name}
                   </h2>
                   <div className="flex items-center flex-wrap pb-4 mb-4 border-b-2 border-gray-100 mt-auto w-full">

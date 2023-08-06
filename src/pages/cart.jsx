@@ -158,10 +158,7 @@ const Cart = () => {
     createOrder(payload)
       .then(response => {
         console.log(response);
-        localStorage.setItem(
-          'cart',
-          JSON.stringify([]),
-        );
+        localStorage.setItem('cart', JSON.stringify([]));
         navigate(`/order/${response.data._id}`);
       })
       .catch(e => {
@@ -180,7 +177,7 @@ const Cart = () => {
   return (
     <div className="mx-auto">
       <div className="flex shadow-md">
-        <div className="w-3/4 bg-white px-10 py-10 mt-[5rem]">
+        <div className="w-3/4 bg-white px-10 py-10 mt-[1rem]">
           <div className="flex justify-between border-b pb-8">
             <h1 className="font-semibold text-2xl">Shopping Cart</h1>
             <h2 className="font-semibold text-2xl">{carts?.length} Items</h2>
@@ -205,9 +202,9 @@ const Cart = () => {
                 key={index}
                 className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
                 <div className="flex w-2/5">
-                  <div className="w-20">
+                  <div className="flex-shrink-0">
                     <img
-                      className="h-24"
+                      className="w-16 h-16 rounded-md"
                       src={
                         config.api_host + '/images/products/' + cart?.image_url
                       }
@@ -269,7 +266,7 @@ const Cart = () => {
           </Link>
         </div>
 
-        <div id="summary" className="w-1/4 px-8 py-10 mt-[5rem]">
+        <div id="summary" className="w-1/4 px-8 py-10 mt-[1rem]">
           <h1 className="font-semibold text-2xl border-b pb-8">
             Order Summary
           </h1>

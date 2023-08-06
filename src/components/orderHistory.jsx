@@ -8,6 +8,7 @@ import {Link} from 'react-router-dom';
 
 const OrderHistory = () => {
   const [order, setOrder] = useState();
+  const payment = JSON.parse(localStorage.getItem('Payment')) || [];
 
   const Order = async e => {
     getOrders(10)
@@ -23,11 +24,19 @@ const OrderHistory = () => {
     Order();
   }, []);
 
+  if (order?.count < 1) {
+    return (
+      <div className=" h-[100vh] flex justify-center items-center text-4xl ">
+        Order History Is Empty
+      </div>
+    );
+  }
+
   return (
     <div className="mx-auto">
       <div>
-        <div className="w-full mb-20 pt-[3rem] bg-gray-100">
-          <main className="w-full mx-auto py-16 px-4 sm:px-6 lg:pb-24 lg:px-8">
+        <div className="w-full mb-20 bg-gray-100">
+          <main className="w-full mx-auto py-8 px-4 sm:px-6 lg:pb-24 lg:px-8">
             <div className="w-full">
               <h1 className="text-2xl font-semibold tracking-tight text-gray-900 sm:text-3xl">
                 Order history
@@ -43,7 +52,10 @@ const OrderHistory = () => {
                 Recent orders
               </h2>
               {order?.data?.map((order, key) => {
-                console.log(order);
+                const found = payment.find(obj => {
+                  return obj?.order_id === order?.id;
+                });
+
                 let subtotal = order?.order_items.reduce(
                   (total, item) => (total += item.price * item.qty),
                   0,
@@ -80,24 +92,40 @@ const OrderHistory = () => {
                           </div>
                         </dl>
                         <div className="flex justify-between pt-6 sm:block sm:pt-0">
-                          <div className="font-bold text-gray-900">
+                          <div className="font-bold text-gray-900 text-center">
                             <span
                               className={
-                                order?.status === 'waiting_payment'
-                                  ? 'text-yellow-500'
-                                  : 'text-green-500'
+                                order?.status === 'paid' ||
+                                found?.transaction_status === 'settlement'
+                                  ? 'text-green-500'
+                                  : 'text-yellow-500'
                               }>
-                              {order?.status === 'waiting_payment'
-                                ? 'Waiting Payment'
-                                : 'Paid'}
+                              {order?.status === 'paid' ||
+                              found?.transaction_status === 'settlement'
+                                ? `Paid - ${moment(
+                                    found?.transaction_time,
+                                  ).format('LLL')}`
+                                : 'Waiting Payment'}
                             </span>
-                            <dd className="sm:mt-1">
+                            <dd className="sm:mt-2">
                               <Link
                                 to={`/order/${order?.id}`}
                                 className="w-full flex items-center justify-center bg-white mt-6 py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:mt-0">
                                 View Order
                               </Link>
                             </dd>
+                            {order?.status === 'paid' ||
+                            found?.transaction_status === 'settlement' ? (
+                              <dd className="sm:mt-2">
+                                <Link
+                                  to={`/invoice/${order?.id}`}
+                                  className="w-full flex items-center justify-center bg-green-500 mt-6 py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-white hover:bg-green-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:mt-0">
+                                  View Invoice
+                                </Link>
+                              </dd>
+                            ) : (
+                              ''
+                            )}
                           </div>
                         </div>
                       </div>

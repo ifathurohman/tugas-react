@@ -49,7 +49,7 @@ function Hero() {
   return (
     <div className="py-[5rem]">
       <div className="flex justify-center">
-        <div className="w-[97%] pt-12">
+        <div className="w-[97%]">
           <Slide {...properties} transitionDuration={500}>
             {slideImages.map((slideImage, index) => (
               <div key={index}>
