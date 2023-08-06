@@ -5,10 +5,13 @@ import {getOrders} from '../app/api/order';
 import moment from 'moment';
 import {config} from '../utils/config';
 import {Link} from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const OrderHistory = () => {
   const [order, setOrder] = useState();
   const payment = JSON.parse(localStorage.getItem('Payment')) || [];
+  const user = useSelector(state => state.user);
+  const detailUser = user.userInfo.details;
 
   const Order = async e => {
     getOrders(10)
@@ -24,9 +27,9 @@ const OrderHistory = () => {
     Order();
   }, []);
 
-  if (order?.count < 1) {
+  if (order?.count < 1 || detailUser?.error === 1) {
     return (
-      <div className=" h-[100vh] flex justify-center items-center text-4xl ">
+      <div className=" h-[70vh] flex justify-center items-center text-4xl ">
         Order History Is Empty
       </div>
     );

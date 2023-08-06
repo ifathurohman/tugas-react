@@ -24,9 +24,9 @@ const SignUp = () => {
 
   return (
     <div>
-      <section className="bg-custom-white dark:bg-custom-dark">
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-custom-dark dark:border-gray-600">
+      <section className="bg-gray-100 dark:bg-custom-dark">
+        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-[80vh] lg:py-0">
+          <div className="w-full bg-white rounded-lg shadow-lg dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-custom-dark dark:border-gray-600">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl ">
                 Create and account
@@ -36,7 +36,7 @@ const SignUp = () => {
                   <label
                     htmlFor="full_name"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-                    Your full_name
+                    Your Full Name
                   </label>
                   <input
                     type="full_name"
@@ -53,7 +53,7 @@ const SignUp = () => {
                   <label
                     htmlFor="email"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-                    Your email
+                    Your Email
                   </label>
                   <input
                     type="email"
