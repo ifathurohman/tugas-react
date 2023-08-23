@@ -8,17 +8,18 @@ function useLogin() {
     loading: true,
     isLogin: false,
   });
-  const {replace} = useNavigate();
+  const navigate = useNavigate();
   const checkLogin = useCallback(async () => {
     const {statusCode, data} = await Api.getRequest(`/auth/me`);
-    // console.log({statusCode, data})
-    if (statusCode === 400 || statusCode === 500) {
-      replace('/');
+    console.log({statusCode, data});
+    if (statusCode === 401 || statusCode === 200) {
+      // navigate('/');
       logout();
       return;
+    } else {
+      setLoginInfo({loading: false, isLogin: true});
     }
-    setLoginInfo({loading: false, isLogin: true});
-  }, [replace]);
+  }, []);
   useEffect(() => {
     checkLogin();
   }, [checkLogin]);

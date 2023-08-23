@@ -49,8 +49,8 @@ const OrderDetail = () => {
     Detail();
   }, []);
 
-  const notifyError = () =>
-    toast.info('You need to first login.', {
+  const notifyError = result =>
+    toast.info(`${result}`, {
       position: 'bottom-center',
       autoClose: 1500,
       hideProgressBar: false,
@@ -104,12 +104,11 @@ const OrderDetail = () => {
           navigate('/order');
         },
         onPending: function (result) {
-          console.log('pending');
-          localStorage.setItem('Payment', JSON.stringify(result));
+          console.log(result);
         },
         onError: function (result) {
-          console.log('error');
           console.log(result);
+          notifyError(result?.status_message);
         },
         onClose: function () {
           notifyClose();
@@ -152,6 +151,7 @@ const OrderDetail = () => {
       })
       .catch(error => {
         console.log(error);
+         notifyError(error?.message);
       });
   };
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link, NavLink, useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {AiOutlineSearch} from 'react-icons/ai';
@@ -6,11 +6,23 @@ import {setInitialState} from '../redux/actions/userAction.js';
 import {logoutUser} from '../app/api/auth';
 import {config} from '../utils/config';
 import {getToken} from '../utils/localstorage.js';
+import useLogin from '../utils/hooks/useLogin.js';
 
 const Navbar = () => {
+  const [login, setLogin] = useState(false);
   const token_key = config.secret_key;
   let token = window.localStorage.getItem(token_key);
   let fromToken = token === getToken();
+  const checkLogin = () => {
+    if (token === null) {
+      setLogin(false);
+    } else if (token === undefined) {
+      setLogin(false);
+    } else {
+      setLogin(true);
+    }
+  };
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(state => state.user);
@@ -32,6 +44,10 @@ const Navbar = () => {
     dispatch(setInitialState());
     navigate('/login');
   };
+
+  useEffect(() => {
+    checkLogin();
+  }, [checkLogin]);
 
   return (
     <header className="text-gray-600 body-font shadow-lg w-screen fixed bg-white z-40">
@@ -59,7 +75,9 @@ const Navbar = () => {
           <Link to={'/product'} className="mr-5 hover:text-gray-900">
             Product
           </Link>
-          <Link to={'/order'} className="mr-5 hover:text-gray-900">History</Link>
+          <Link to={'/order'} className="mr-5 hover:text-gray-900">
+            History
+          </Link>
         </nav>
         {/* Search */}
         <div className="md:flex mr-4 ml-12">
@@ -138,7 +156,7 @@ const Navbar = () => {
                   />
                 </svg>
               </button>
-              {fromToken === true ? (
+              {login === true ? (
                 <div className="hidden peer-hover:flex hover:flex absolute right-4 bg-white dark:bg-custom-dark-second min-w-[160px] shadow-xl z-10 rounded-lg ">
                   <div className="flex flex-col text-center w-full">
                     <div className="my-2">

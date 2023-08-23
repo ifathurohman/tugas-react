@@ -5,11 +5,10 @@ import {getOrders} from '../app/api/order';
 import moment from 'moment';
 import {config} from '../utils/config';
 import {Link} from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
 const OrderHistory = () => {
   const [order, setOrder] = useState();
-  const payment = JSON.parse(localStorage.getItem('Payment')) || [];
   const user = useSelector(state => state.user);
   const detailUser = user.userInfo.details;
 
@@ -55,6 +54,9 @@ const OrderHistory = () => {
                 Recent orders
               </h2>
               {order?.data?.map((order, key) => {
+                const payment =
+                  JSON.parse(localStorage.getItem('Payment')) || [];
+                console.log(payment)
                 const found = payment.find(obj => {
                   return obj?.order_id === order?.id;
                 });
